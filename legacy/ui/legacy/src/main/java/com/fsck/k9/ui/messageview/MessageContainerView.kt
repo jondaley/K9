@@ -61,6 +61,7 @@ class MessageContainerView(context: Context, attrs: AttributeSet?) :
     private lateinit var unsignedText: MaterialTextView
 
     private var isShowingPictures = false
+    private var isShowingInlinePictures = false
     private var currentHtmlText: String? = null
     private val attachmentViewMap = mutableMapOf<AttachmentViewInfo, AttachmentView>()
     private val attachments = mutableMapOf<Uri, AttachmentViewInfo>()
@@ -69,6 +70,10 @@ class MessageContainerView(context: Context, attrs: AttributeSet?) :
 
     @get:JvmName("hasHiddenExternalImages")
     var hasHiddenExternalImages = false
+        private set
+
+    @get:JvmName("hasHiddenInlineImages")
+    var hasHiddenInlineImages = false
         private set
 
     public override fun onFinishInflate() {
@@ -403,8 +408,17 @@ class MessageContainerView(context: Context, attrs: AttributeSet?) :
         isShowingPictures = enable
     }
 
+    private fun setLoadInlinePictures(enable: Boolean) {
+        isShowingInlinePictures = enable
+    }
+
     fun showPictures() {
         setLoadPictures(true)
+        refreshDisplayedContent()
+    }
+
+    fun showInlinePictures() {
+        setLoadInlinePictures(true)
         refreshDisplayedContent()
     }
 
@@ -427,6 +441,16 @@ class MessageContainerView(context: Context, attrs: AttributeSet?) :
                     setLoadPictures(true)
                 } else {
                     hasHiddenExternalImages = true
+                }
+            }
+        }
+
+        if (messageText != null && !isShowingInlinePictures) {
+            if (Utility.hasInlineImages(messageText)) {
+                if (loadInlinePictures) {
+                    setLoadInlinePictures(true)
+                } else {
+                    hasHiddenInlineImages = true
                 }
             }
         }
@@ -523,6 +547,7 @@ class MessageContainerView(context: Context, attrs: AttributeSet?) :
 
     private fun resetView() {
         setLoadPictures(false)
+        setLoadInlinePictures(false)
         attachmentsContainer.removeAllViews()
 
         currentHtmlText = null

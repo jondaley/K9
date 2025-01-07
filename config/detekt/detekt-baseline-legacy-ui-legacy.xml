@@ -76,6 +76,7 @@
     <ID>ReturnCount:MessageListFragment.kt$MessageListFragment$private fun scrollToMessage(messageReference: MessageReference)</ID>
     <ID>ReturnCount:MessageListSwipeCallback.kt$MessageListSwipeCallback$override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: ViewHolder): Int</ID>
     <ID>ReturnCount:MessageTopView.kt$MessageTopView$private fun shouldShowPicturesFromSender(showPicturesSetting: ShowPictures, message: Message): Boolean</ID>
+    <ID>ReturnCount:MessageTopView.kt$MessageTopView$private fun shouldShowInlinePicturesFromSender(showInlinePicturesSetting: ShowInlinePictures, message: Message): Boolean</ID>
     <ID>ReturnCount:MessageViewFragment.kt$MessageViewFragment$override fun onOptionsItemSelected(item: MenuItem): Boolean</ID>
     <ID>ReturnCount:RecipientLayoutCreator.kt$RecipientLayoutCreator$fun createRecipientLayout( recipientNames: List&lt;CharSequence&gt;, totalNumberOfRecipients: Int, availableWidth: Int, ): RecipientLayoutData</ID>
     <ID>ReturnCount:RecipientPresenter.kt$RecipientPresenter$fun checkRecipientsOkForSending(): Boolean</ID>

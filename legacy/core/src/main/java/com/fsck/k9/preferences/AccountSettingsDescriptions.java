@@ -17,6 +17,7 @@ import app.k9mail.legacy.account.Account.FolderMode;
 import app.k9mail.legacy.account.Account.MessageFormat;
 import app.k9mail.legacy.account.Account.QuoteStyle;
 import app.k9mail.legacy.account.Account.ShowPictures;
+import app.k9mail.legacy.account.Account.ShowInlinePictures;
 import app.k9mail.legacy.account.Account.SortType;
 import app.k9mail.legacy.account.Account.SpecialFolderSelection;
 import com.fsck.k9.AccountPreferenceSerializer;
@@ -183,6 +184,9 @@ class AccountSettingsDescriptions {
         ));
         s.put("showPicturesEnum", Settings.versions(
                 new V(1, new EnumSetting<>(ShowPictures.class, ShowPictures.NEVER))
+        ));
+        s.put("showInlinePicturesEnum", Settings.versions(
+                new V(1, new EnumSetting<>(ShowInlinePictures.class, ShowInlinePictures.NEVER))
         ));
         s.put("signatureBeforeQuotedText", Settings.versions(
                 new V(1, new BooleanSetting(false))

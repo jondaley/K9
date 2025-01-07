@@ -12,6 +12,7 @@ import app.k9mail.legacy.account.Account.FolderMode
 import app.k9mail.legacy.account.Account.MessageFormat
 import app.k9mail.legacy.account.Account.QuoteStyle
 import app.k9mail.legacy.account.Account.ShowPictures
+import app.k9mail.legacy.account.Account.ShowInlinePictures
 import app.k9mail.legacy.account.Account.SortType
 import app.k9mail.legacy.account.Account.SpecialFolderSelection
 import app.k9mail.legacy.account.Identity
@@ -155,6 +156,7 @@ class AccountPreferenceSerializer(
             setSortAscending(sortType, storage.getBoolean("$accountUuid.sortAscending", false))
 
             showPictures = getEnumStringPref<ShowPictures>(storage, "$accountUuid.showPicturesEnum", ShowPictures.NEVER)
+            showInlinePictures = getEnumStringPref<ShowInlinePictures>(storage, "$accountUuid.showInlinePicturesEnum", ShowInlinePictures.NEVER)
 
             updateNotificationSettings {
                 NotificationSettings(
@@ -309,6 +311,7 @@ class AccountPreferenceSerializer(
             editor.putString("$accountUuid.sortTypeEnum", sortType.name)
             editor.putBoolean("$accountUuid.sortAscending", isSortAscending(sortType))
             editor.putString("$accountUuid.showPicturesEnum", showPictures.name)
+            editor.putString("$accountUuid.showInlinePicturesEnum", showInlinePictures.name)
             editor.putString("$accountUuid.folderDisplayMode", folderDisplayMode.name)
             editor.putString("$accountUuid.folderSyncMode", folderSyncMode.name)
             editor.putString("$accountUuid.folderPushMode", folderPushMode.name)
@@ -438,6 +441,7 @@ class AccountPreferenceSerializer(
         editor.remove("$accountUuid.sortTypeEnum")
         editor.remove("$accountUuid.sortAscending")
         editor.remove("$accountUuid.showPicturesEnum")
+        editor.remove("$accountUuid.showInlinePicturesEnum")
         editor.remove("$accountUuid.replyAfterQuote")
         editor.remove("$accountUuid.stripSignature")
         editor.remove("$accountUuid.cryptoApp") // this is no longer set, but cleans up legacy values
@@ -579,6 +583,7 @@ class AccountPreferenceSerializer(
             sortType = DEFAULT_SORT_TYPE
             setSortAscending(DEFAULT_SORT_TYPE, DEFAULT_SORT_ASCENDING)
             showPictures = ShowPictures.NEVER
+            showInlinePictures = ShowInlinePictures.NEVER
             isSignatureBeforeQuotedText = false
             expungePolicy = Expunge.EXPUNGE_IMMEDIATELY
             importedAutoExpandFolder = null

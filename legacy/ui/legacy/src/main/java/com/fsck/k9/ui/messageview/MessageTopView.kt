@@ -20,6 +20,7 @@ import app.k9mail.core.common.mail.EmailAddress
 import app.k9mail.core.common.mail.toEmailAddressOrNull
 import app.k9mail.legacy.account.Account
 import app.k9mail.legacy.account.Account.ShowPictures
+import app.k9mail.legacy.account.Account.ShowInlinePictures
 import com.fsck.k9.mail.Message
 import com.fsck.k9.mailstore.AttachmentViewInfo
 import com.fsck.k9.mailstore.MessageViewInfo
@@ -77,6 +78,8 @@ class MessageTopView(
         extraHeaderContainer = findViewById(R.id.extra_header_container)
         showPicturesButton = findViewById(R.id.show_pictures)
         setShowPicturesButtonListener()
+        showInlinePicturesButton = findViewById(R.id.show_inline_pictures)
+        setShowInlinePicturesButtonListener()
 
         containerView = findViewById(R.id.message_container)
 
@@ -137,6 +140,9 @@ class MessageTopView(
 
         if (view.hasHiddenExternalImages && !showPicturesButtonClicked) {
             showShowPicturesButton()
+        }
+        if (view.hasHiddenInternalImages && !showInlinePicturesButtonClicked) {
+            showShowInlinePicturesButton()
         }
     }
 
@@ -266,6 +272,26 @@ class MessageTopView(
         return contactRepository.hasContactFor(senderEmailAddress)
     }
 
+    private fun showShowInlinePicturesButton() {
+        extraHeaderContainer.visibility = VISIBLE
+    }
+
+    private fun hideShowInlinePicturesButton() {
+        extraHeaderContainer.visibility = GONE
+    }
+
+    private fun shouldAutomaticallyLoadInlinePictures(showInlinePicturesSetting: ShowInlinePictures, message: Message): Boolean {
+        return showInlinePicturesSetting === ShowInlinePictures.ALWAYS || shouldShowInlinePicturesFromSender(showInlinePicturesSetting, message)
+    }
+
+    private fun shouldShowInlinePicturesFromSender(showInlinePicturesSetting: ShowInlinePictures, message: Message): Boolean {
+        if (showInlinePicturesSetting !== ShowInlinePictures.ONLY_FROM_CONTACTS) {
+            return false
+        }
+        val senderEmailAddress = getSenderEmailAddress(message) ?: return false
+        return contactRepository.hasContactFor(senderEmailAddress)
+    }
+
     private fun getSenderEmailAddress(message: Message): EmailAddress? {
         val from = message.from
         return if (from == null || from.isEmpty()) {
@@ -325,6 +351,7 @@ class MessageTopView(
         val superState = super.onSaveInstanceState()
         val savedState = SavedState(superState)
         savedState.showPicturesButtonClicked = showPicturesButtonClicked
+        savedState.showInlinePicturesButtonClicked = showInlinePicturesButtonClicked
         return savedState
     }
 
@@ -332,6 +359,7 @@ class MessageTopView(
         val savedState = state as SavedState
         super.onRestoreInstanceState(savedState.superState)
         showPicturesButtonClicked = savedState.showPicturesButtonClicked
+        showInlinePicturesButtonClicked = savedState.showInlinePicturesButtonClicked
     }
 
     fun refreshAttachmentThumbnail(attachment: AttachmentViewInfo) {
@@ -341,18 +369,22 @@ class MessageTopView(
         }
     }
 
+// TODO: this only can contain one int?  Need to improve
     private class SavedState : BaseSavedState {
         var showPicturesButtonClicked = false
+        var showInlinePicturesButtonClicked = false
 
         constructor(superState: Parcelable?) : super(superState)
 
         private constructor(`in`: Parcel) : super(`in`) {
             showPicturesButtonClicked = `in`.readInt() != 0
+            showInlinePicturesButtonClicked = `in`.readInt() != 0
         }
 
         override fun writeToParcel(out: Parcel, flags: Int) {
             super.writeToParcel(out, flags)
             out.writeInt(if (showPicturesButtonClicked) 1 else 0)
+            out.writeInt(if (showInlinePicturesButtonClicked) 1 else 0)
         }
 
         companion object {

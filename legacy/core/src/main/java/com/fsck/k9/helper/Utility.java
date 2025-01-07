@@ -193,6 +193,25 @@ public class Utility {
         return false;
     }
 
+        // TODO: what is the point of the trailing \\
+    private static final String INLINE_IMG_SRC_REGEX = "(?is:<img[^>]+src\\s*=\\s*['\"]?data\:image\\:)";
+    private static final Pattern INLINE_IMG_PATTERN = Pattern.compile(INLINE_IMG_SRC_REGEX);
+    /**
+     * Figure out if this part has inline images.
+     * TODO: should only return true if we're an html part
+     * @param message Content to evaluate
+     * @return True if it has inline images; false otherwise.
+     */
+    public static boolean hasInlineImages(final String message) {
+        Matcher imgMatches = INLINE_IMG_PATTERN.matcher(message);
+        if(imgMatches.find())
+            return true;
+        }
+
+        Timber.d("No inline images.");
+        return false;
+    }
+
     /**
      * Unconditionally close a Cursor.  Equivalent to {@link Cursor#close()},
      * if cursor is non-null.  This is typically used in finally blocks.

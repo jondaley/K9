@@ -205,6 +205,10 @@ class Account(
 
     @get:Synchronized
     @set:Synchronized
+    var showInlinePictures = ShowInlinePictures.NEVER
+
+    @get:Synchronized
+    @set:Synchronized
     var isSignatureBeforeQuotedText = false
 
     @get:Synchronized
@@ -606,6 +610,12 @@ class Account(
     }
 
     enum class ShowPictures {
+        NEVER,
+        ALWAYS,
+        ONLY_FROM_CONTACTS,
+    }
+
+    enum class ShowInlinePictures {
         NEVER,
         ALWAYS,
         ONLY_FROM_CONTACTS,

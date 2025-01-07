@@ -50,6 +50,16 @@ the 'message view theme' setting).
                     android:text="@string/message_view_show_remote_images_action"
                     app:icon="@drawable/ic_image"
                     />
+<!-- need another bounding box to center these two buttons? -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/show_inline_pictures"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/message_view_show_inline_images_action"
+                    app:icon="@drawable/ic_image"
+                    />
 
             </FrameLayout>
 

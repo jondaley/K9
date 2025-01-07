@@ -506,6 +506,7 @@
     <string name="size_format_bytes">%d B</string>
     <string name="animations_title">Animation</string>
     <string name="account_settings_message_age_7">the last week</string>
+    <string name="account_settings_show_pictures_label">Always show inline images</string>
     <string name="account_settings_show_pictures_label">Always show images</string>
     <string name="account_settings_identities_summary">Set up alternate \'From\' addresses and signatures</string>
     <string name="debug_enable_debug_logging_title">Enable debug logging</string>
@@ -637,6 +638,7 @@
     <string name="debug_export_logs_failure">Export failed.</string>
     <string name="notification_action_delete_all">Delete All</string>
     <string name="message_view_show_remote_images_action">Show remote images</string>
+    <string name="message_view_show_inline_images_action">Show inline images</string>
     <string name="privacy_preferences">Privacy</string>
     <string name="account_settings_autodownload_message_size_256">256 KiB</string>
     <string name="settings_export_share_button">Share</string>
